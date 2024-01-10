@@ -17,6 +17,7 @@ public class Author {
     private String biography;
     private String twitter;
     private String website;
+    private String sourceId;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Manga> mangas;
 }

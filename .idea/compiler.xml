@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="manga-data" />
         <module name="manga-web-api" />
+        <module name="manga-client" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="manga-client" options="-parameters" />
       <module name="manga-data" options="-parameters" />
       <module name="manga-web-api" options="-parameters" />
     </option>

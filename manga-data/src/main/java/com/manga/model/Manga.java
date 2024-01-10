@@ -14,7 +14,7 @@ public class Manga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long sourceId;
+    private String sourceId;
     private String title;
     private String description;
     private String originalTitle;

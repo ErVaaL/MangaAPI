@@ -4,11 +4,12 @@ CREATE TABLE Author(
     biography VARCHAR(255),
     twitter VARCHAR(255),
     website VARCHAR(255),
+    source_id VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE Manga(
     id BIGINT NOT NULL AUTO_INCREMENT,
-    source_id BIGINT NOT NULL,
+    source_id VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     original_title VARCHAR(255),
     status VARCHAR(20),
@@ -22,7 +23,7 @@ CREATE TABLE Manga(
 CREATE TABLE Genre(
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    source_id BIGINT NOT NULL,
+    source_id VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE Manga_Genre(
