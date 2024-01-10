@@ -12,6 +12,4 @@ import lombok.Setter;
 public class MangaSummaryDTO {
     private long id;
     private String title;
-    private String description;
-    private String originalLanguage;
 }
