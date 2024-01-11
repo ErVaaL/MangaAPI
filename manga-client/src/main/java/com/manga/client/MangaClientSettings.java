@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MangaClientSettings implements IMangaClientSettings{
-    @Value("${manga.api.url}")
+    @Value("${mangadex.api.host}")
     private String mangaApiUrl;
     @Override
     public String getMangaApiUrl() {

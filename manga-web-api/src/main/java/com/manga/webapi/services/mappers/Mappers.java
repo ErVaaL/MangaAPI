@@ -21,5 +21,30 @@ public class Mappers implements IMappers {
     private final IMap<Manga, MangaSummaryDTO> getMangaToSummaryDtoMapper;
     private final IMap<Author, AuthorDTO> getAuthorToDtoMapper;
     private final IMap<AuthorDTO, Author> getAuthorDtoToEntityMapper;
+
+    @Override
+    public IMap<MangaDTO, Manga> getMangaDtoToEntityMapper() {
+        return getMangaDtoToEntityMapper;
+    }
+
+    @Override
+    public IMap<Manga, MangaDTO> getMangaToDtoMapper() {
+        return getMangaToDtoMapper;
+    }
+
+    @Override
+    public IMap<Manga, MangaSummaryDTO> getMangaToSummaryDtoMapper() {
+        return getMangaToSummaryDtoMapper;
+    }
+
+    @Override
+    public IMap<Author, AuthorDTO> getAuthorToDtoMapper() {
+        return getAuthorToDtoMapper;
+    }
+
+    @Override
+    public IMap<AuthorDTO, Author> getAuthorDtoToEntityMapper() {
+        return getAuthorDtoToEntityMapper;
+    }
 }
 

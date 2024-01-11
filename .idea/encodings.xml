@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/manga-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/manga-data/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manga-db-updater/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/manga-web-api/src/main/java" charset="UTF-8" />
   </component>
 </project>

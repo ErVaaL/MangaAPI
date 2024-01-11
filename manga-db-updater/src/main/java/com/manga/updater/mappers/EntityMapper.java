@@ -17,4 +17,19 @@ public class EntityMapper implements ICatalogMappers{
     private final IMapEntities<AuthorDto, Author> getAuthorMapper;
     private final IMapEntities<MangaDto, Manga> getMangaMapper;
     private final IMapEntities<TagDto, Genre> getGenreMapper;
+
+    @Override
+    public IMapEntities<MangaDto, Manga> getMangaMapper() {
+        return getMangaMapper;
+    }
+
+    @Override
+    public IMapEntities<AuthorDto, Author> getAuthorMapper() {
+        return getAuthorMapper;
+    }
+
+    @Override
+    public IMapEntities<TagDto, Genre> getGenreMapper() {
+        return getGenreMapper;
+    }
 }

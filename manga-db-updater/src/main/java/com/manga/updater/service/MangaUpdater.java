@@ -2,14 +2,16 @@ package com.manga.updater.service;
 
 import com.manga.client.IMangaClient;
 import com.manga.client.IMangaDictionariesClient;
+import com.manga.model.Manga;
 import com.manga.repositories.ICatalogData;
 import com.manga.updater.mappers.ICatalogMappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.function.Predicate;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class MangaUpdater implements IUpdateManga{
     private final ICatalogData data;
@@ -23,7 +25,9 @@ public class MangaUpdater implements IUpdateManga{
         var mangas = MangaResultList.getData().stream().map(dto->mangaClient.getMangaById(dto.getId())).toList();
         var mangaEntities = mangas.stream().map(dto->mapper.getMangaMapper().map(dto)).toList();
 
-        var mangaSourceIds = data.getMangas().findAll().stream().map(entity->entity.getSourceId()).toList();
+        var authors = data.getAuthors().findAll();
+
+        var mangaSourceIds = data.getMangas().findAll().stream().map(Manga::getSourceId).toList();
         var entitiesToSave = mangaEntities.stream().filter(Predicate.not(entity-> mangaSourceIds.contains(entity.getSourceId())))
                 .toList();
         entitiesToSave.forEach(entity->{
@@ -34,14 +38,14 @@ public class MangaUpdater implements IUpdateManga{
                     .getRelationships()
                     .stream().filter(relationshipDto->relationshipDto.getType().equals("author"))
                     .map(relationshipDto->mangaClient.getAuthorById(relationshipDto.getId())).map(dto->mapper.getAuthorMapper().map(dto)).findFirst().get();
-            data.getAuthors().save(author);
+            if(!authors.contains(author)) data.getAuthors().save(author);
             entity.setAuthor(author);
         });
 
     }
     private void updateDictionaries() {
         var genres = data.getGenres().findAll();
-        var genresFromTags = dictionariesClient.getTags().stream()
+        var genresFromTags = dictionariesClient.getTagsDtos().stream()
                 .filter(tagDto -> tagDto.getGroup().equals("genre"))
                 .map(dto->mapper.getGenreMapper().map(dto))
                 .toList();

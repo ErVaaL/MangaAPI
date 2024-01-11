@@ -11,17 +11,16 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MangaDictionariesClient implements IMangaDictionariesClient{
-    RestTemplate restClient;
-    String baseUrl;
+    RestTemplate restClient = new RestTemplate();
 
     private final IMangaClientSettings settings;
 
     @Override
-    public List<TagDto> getTags() {
+    public List<TagDto> getTagsDtos() {
         String url = settings.getUrlBuilder()
-                .pathSegment("manga", "tags")
+                .pathSegment("manga", "tag")
                 .build()
                 .toUriString();
-        return restClient.getForObject(url, TagListDto.class).getTags();
+        return restClient.getForObject(url, TagListDto.class).getData();
     }
 }

@@ -2,7 +2,9 @@ package com.manga.updater.mappers;
 
 import com.manga.client.contract.AuthorDto;
 import com.manga.model.Author;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AuthorMapper implements IMapEntities<AuthorDto, Author>{
     @Override
     public Author map(AuthorDto authorDto) {

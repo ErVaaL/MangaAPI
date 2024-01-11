@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RequiredArgsConstructor
 public class MangaClient implements IMangaClient{
-    private RestTemplate restClient;
+    private final RestTemplate restClient = new RestTemplate();
     private String baseUrl;
     private final IMangaClientSettings settings;
 
