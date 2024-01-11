@@ -7,7 +7,7 @@ public interface IMangaClientSettings {
     default UriComponentsBuilder getUrlBuilder(){
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
+                .scheme("https")
                 .host(getMangaApiUrl());
     }
 }

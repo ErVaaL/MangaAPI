@@ -44,13 +44,14 @@ public class MangaUpdater implements IUpdateManga{
 
     }
     private void updateDictionaries() {
+        var tags = dictionariesClient.getTagsDtos();
         var genres = data.getGenres().findAll();
         var genresFromTags = dictionariesClient.getTagsDtos().stream()
-                .filter(tagDto -> tagDto.getGroup().equals("genre"))
+                .filter(tagDto -> tagDto.getAttributes().getGroup().equals("genre"))
                 .map(dto->mapper.getGenreMapper().map(dto))
                 .toList();
         genresFromTags.stream()
-                .filter(Predicate.not(genre->genres.contains(genre)))
+                .filter(Predicate.not(genresFromTags::contains))
                 .forEach(genre->data.getGenres().save(genre));
     }
 }

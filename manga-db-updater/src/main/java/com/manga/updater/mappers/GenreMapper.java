@@ -14,7 +14,7 @@ public class GenreMapper implements IMapEntities<TagDto, Genre>{
     @Override
     public Genre map(TagDto tagDto, Genre genre) {
         genre.setSourceId(tagDto.getId());
-        genre.setName(tagDto.getName());
+        genre.setName(tagDto.getAttributes().getName());
         return genre;
     }
 }
