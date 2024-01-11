@@ -11,4 +11,5 @@ public class TagDTO {
     private long id;
     private String name;
     private String group;
+    private String sourceId;
 }

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MangaSummaryDTO {
+public class GenreDTO {
     private long id;
-    private String title;
+    private String name;
     private String sourceId;
 }

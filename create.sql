@@ -11,7 +11,7 @@ CREATE TABLE Manga(
     id BIGINT NOT NULL AUTO_INCREMENT,
     source_id VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
-    original_title VARCHAR(255),
+    original_language VARCHAR(30),
     status VARCHAR(20),
     is_locked BOOLEAN NOT NULL,
     year INTEGER,

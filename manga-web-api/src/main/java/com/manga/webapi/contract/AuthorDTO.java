@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthorDTO {
     private long id;
+    private String sourceId;
     private String name;
     private String biography;
     private String twitter;

@@ -17,7 +17,7 @@ public class Manga {
     private String sourceId;
     private String title;
     private String description;
-    private String originalTitle;
+    private String originalLanguage;
     private String status;
     private int year;
     private boolean isLocked;
