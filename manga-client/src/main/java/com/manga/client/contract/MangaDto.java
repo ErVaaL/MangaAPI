@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +18,5 @@ public class MangaDto extends MangaSummaryDto{
     private String status;
     private int year;
     private boolean isLocked;
+    private List<RelationshipDto> relationships;
 }
