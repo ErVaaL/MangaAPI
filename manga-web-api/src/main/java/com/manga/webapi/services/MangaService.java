@@ -74,6 +74,16 @@ public class MangaService implements IMangaService{
         return mappers.getGetAuthorToDtoMapper().map(authorEntity);
     }
 
+    @Override
+    public List<MangaDTO> getAllMangas() {
+        return db.getMangas().findAll().stream().map(x->mappers.getMangaToDtoMapper().map(x)).toList();
+    }
+
+    @Override
+    public List<AuthorDTO> getAuthors() {
+        return db.getAuthors().findAll().stream().map(x->mappers.getGetAuthorToDtoMapper().map(x)).toList();
+    }
+
     private GenreDTO mapGenreDto(Genre genre){
         var genreDto = new GenreDTO();
         genreDto.setId(genre.getId());

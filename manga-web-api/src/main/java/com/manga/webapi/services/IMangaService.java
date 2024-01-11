@@ -16,4 +16,7 @@ public interface IMangaService {
     void deleteAuthorById(long id);
     long updateAuthor(AuthorDTO authorDto, long id);
     AuthorDTO getAuthor(long id);
+    List<MangaDTO> getAllMangas();
+
+    List<AuthorDTO> getAuthors();
 }
