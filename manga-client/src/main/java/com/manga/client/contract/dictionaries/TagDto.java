@@ -13,6 +13,6 @@ import lombok.Setter;
 public class TagDto {
     private String id;
     private TagAttributesDto attributes;
-    private String name;
-    private String group;
+//    private String name;
+//    private String group;
 }

@@ -1,5 +1,6 @@
 package com.manga.client.contract;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MangaDto extends MangaSummaryDto{
-    private String title;
-    private String description;
-    private String originalLanguage;
-    private String status;
-    private int year;
-    private boolean isLocked;
+    @JsonProperty("attributes")
+    private MangaAttributesDto attributes;
     private List<RelationshipDto> relationships;
 }

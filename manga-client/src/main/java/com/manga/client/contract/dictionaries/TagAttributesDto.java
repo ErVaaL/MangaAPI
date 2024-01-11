@@ -12,10 +12,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TagAttributesDto {
     private String group;
-    private String name;
-}
-@Getter
-class TagAttribute{
-    @JsonProperty("en")
-    private String value;
+    private TagAttribute name;
 }
