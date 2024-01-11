@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/manga-web-api/pom.xml" />
         <option value="$PROJECT_DIR$/manga-data/pom.xml" />
         <option value="$PROJECT_DIR$/manga-client/pom.xml" />
+        <option value="$PROJECT_DIR$/manga-db-updater/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
