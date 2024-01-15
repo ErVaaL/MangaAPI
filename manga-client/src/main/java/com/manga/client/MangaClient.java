@@ -1,8 +1,9 @@
 package com.manga.client;
 
-import com.manga.client.contract.AuthorDto;
-import com.manga.client.contract.MangaDto;
-import com.manga.client.contract.MangaListResultDto;
+import com.manga.client.contract.authorDtos.AuthorDto;
+import com.manga.client.contract.authorDtos.AuthorResultDto;
+import com.manga.client.contract.mangaDtos.MangaDto;
+import com.manga.client.contract.mangaDtos.MangaListResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -34,11 +35,11 @@ public class MangaClient implements IMangaClient{
     }
 
     @Override
-    public AuthorDto getAuthorById(String id) {
+    public AuthorResultDto getAuthorById(String id) {
         var url = settings.getUrlBuilder()
                 .pathSegment("author", id)
                 .build()
                 .toUriString();
-        return restClient.getForObject(url, AuthorDto.class);
+        return restClient.getForObject(url, AuthorResultDto.class);
     }
 }

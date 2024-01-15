@@ -1,11 +1,12 @@
 package com.manga.client;
 
-import com.manga.client.contract.AuthorDto;
-import com.manga.client.contract.MangaDto;
-import com.manga.client.contract.MangaListResultDto;
+import com.manga.client.contract.authorDtos.AuthorDto;
+import com.manga.client.contract.authorDtos.AuthorResultDto;
+import com.manga.client.contract.mangaDtos.MangaDto;
+import com.manga.client.contract.mangaDtos.MangaListResultDto;
 
 public interface IMangaClient {
     MangaListResultDto getMangaListByYear(int year);
     MangaDto getMangaById(String id);
-    AuthorDto getAuthorById(String id);
+    AuthorResultDto getAuthorById(String id);
 }
