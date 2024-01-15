@@ -42,6 +42,7 @@ public class MangaUpdater implements IUpdateManga{
                 if(!authors.contains(authorEntity)) data.getAuthors().save(authorEntity);
                 entity.setAuthor(authorEntity);
             }
+
             data.getMangas().save(entity);
         });
 
@@ -54,7 +55,7 @@ public class MangaUpdater implements IUpdateManga{
                 .map(dto->mapper.getGenreMapper().map(dto))
                 .toList();
         genresFromTags.stream()
-                .filter(Predicate.not(genresFromTags::contains))
+                .filter(Predicate.not(genres::contains))
                 .forEach(genre->data.getGenres().save(genre));
     }
 }

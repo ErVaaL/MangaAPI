@@ -11,8 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TagDto {
+    @JsonProperty("id")
     private String id;
+    @JsonProperty("attributes")
     private TagAttributesDto attributes;
-//    private String name;
-//    private String group;
+
 }
