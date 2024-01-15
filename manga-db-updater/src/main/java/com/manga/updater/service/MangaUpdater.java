@@ -6,6 +6,7 @@ import com.manga.model.Manga;
 import com.manga.repositories.ICatalogData;
 import com.manga.updater.mappers.ICatalogMappers;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MangaUpdater implements IUpdateManga{
     private final ICatalogData data;
     private final IMangaClient mangaClient;
@@ -40,23 +42,30 @@ public class MangaUpdater implements IUpdateManga{
             if(!mangaRelationships.isEmpty()){
                 var authorRelationship = mangaRelationships.stream()
                         .filter(relationshipDto->relationshipDto.getType().equals("author"))
-                        .findFirst().get();
-                var authorDto = mangaClient.getAuthorById(authorRelationship.getId()).getData();
-                var authorEntity = mapper.getAuthorMapper().map(authorDto);
-                if(!authorsSourceIds.contains(authorEntity.getSourceId())) data.getAuthors().save(authorEntity);
-                entity.setAuthor(authorEntity);
+                        .findFirst();
+                if(authorRelationship.isPresent()){
+                    var authorDto = mangaClient.getAuthorById(authorRelationship.get().getId()).getData();
+                    var authorEntity = mapper.getAuthorMapper().map(authorDto);
+                    if(!authorsSourceIds.contains(authorEntity.getSourceId())) data.getAuthors().save(authorEntity);
+                    entity.setAuthor(authorEntity);
+                }else {
+                    entity.setAuthor(null);
+                }
             }
-            data.getMangas().save(entity);
+            if(!mangaSourceIds.contains(entity.getSourceId())){
+                data.getMangas().save(entity);
+            }
             mangaGenresDtos.forEach(tagDto->{
                 var genreEntity = data.getGenres().findBySourceId(tagDto.getId());
                 if(genreEntity == null){
-                    genreEntity = data.getGenres().save(mapper.getGenreMapper().map(tagDto));
+                    data.getGenres().save(mapper.getGenreMapper().map(tagDto));
+                    entity.getGenres().add(data.getGenres().findBySourceId(tagDto.getId()));
+                }else{
+                    entity.getGenres().add(genreEntity);
                 }
-                entity.getGenres().add(genreEntity);
             });
 
         });
-
     }
     private void updateDictionaries() {
         var tags = dictionariesClient.getTagsDtos();
