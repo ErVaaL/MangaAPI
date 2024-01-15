@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,8 @@ public class Author {
     private String biography;
     private String twitter;
     private String website;
+    @Column(unique = true)
     private String sourceId;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Manga> mangas;
+    private List<Manga> mangas = new ArrayList<>();
 }

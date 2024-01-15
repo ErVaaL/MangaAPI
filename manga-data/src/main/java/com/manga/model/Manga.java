@@ -14,6 +14,7 @@ public class Manga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String sourceId;
     private String title;
     private String description;
@@ -24,7 +25,7 @@ public class Manga {
     @ManyToOne
     @JoinColumn(name = "author_id",referencedColumnName = "id")
     private Author author;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "manga_genre",
             joinColumns = @JoinColumn(name = "manga_id"),
