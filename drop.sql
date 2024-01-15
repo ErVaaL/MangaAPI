@@ -1,0 +1,1 @@
+DROP TABLE Manga_Genre, Genre, Manga, Author CASCADE;

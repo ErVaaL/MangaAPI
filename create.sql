@@ -1,7 +1,7 @@
 CREATE TABLE Author(
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(60) NOT NULL,
-    biography VARCHAR(255),
+    biography TEXT,
     twitter VARCHAR(255),
     website VARCHAR(255),
     source_id VARCHAR(255) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE Manga(
     status VARCHAR(20),
     is_locked BOOLEAN NOT NULL,
     year INTEGER,
-    description VARCHAR(255),
+    description TEXT,
     author_id BIGINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (author_id) REFERENCES Author(id)
