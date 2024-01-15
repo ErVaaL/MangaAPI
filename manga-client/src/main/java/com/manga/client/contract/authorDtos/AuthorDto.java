@@ -1,6 +1,8 @@
-package com.manga.client.contract;
+package com.manga.client.contract.authorDtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.manga.client.contract.RelationshipDto;
+import com.manga.client.contract.mangaDtos.MangaSummaryDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorDto {
+    @JsonProperty("id")
     private String id;
-    private String name;
-    private String biography;
-    private String twitter;
-    private String website;
+    @JsonProperty("attributes")
+    private AuthorAttributesDto attributes;
     @JsonProperty("relationships")
-    private List<MangaSummaryDto> mangas;
+    private List<RelationshipDto> mangas;
 
 }

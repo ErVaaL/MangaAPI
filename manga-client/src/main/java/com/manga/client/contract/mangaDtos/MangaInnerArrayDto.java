@@ -1,4 +1,4 @@
-package com.manga.client.contract;
+package com.manga.client.contract.mangaDtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

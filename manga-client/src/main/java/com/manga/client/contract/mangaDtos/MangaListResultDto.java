@@ -1,4 +1,4 @@
-package com.manga.client.contract;
+package com.manga.client.contract.mangaDtos;
 
 import lombok.Getter;
 

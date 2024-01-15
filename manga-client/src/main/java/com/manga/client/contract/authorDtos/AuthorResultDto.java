@@ -1,4 +1,4 @@
-package com.manga.client.contract;
+package com.manga.client.contract.authorDtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -12,8 +12,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MangaDto extends MangaSummaryDto{
-    @JsonProperty("attributes")
-    private MangaAttributesDto attributes;
-    private List<RelationshipDto> relationships;
+public class AuthorResultDto {
+    @JsonProperty("data")
+    AuthorDto data;
+
 }
