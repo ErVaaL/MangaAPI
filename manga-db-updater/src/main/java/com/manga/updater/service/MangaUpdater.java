@@ -21,25 +21,28 @@ public class MangaUpdater implements IUpdateManga{
     @Override
     public void updateByYear(int year) {
         updateDictionaries();
-        var MangaResultList = mangaClient.getMangaListByYear(year);
-        var mangas = MangaResultList.getData().stream().map(dto->mangaClient.getMangaById(dto.getId())).toList();
-        var mangaEntities = mangas.stream().map(dto->mapper.getMangaMapper().map(dto)).toList();
+        var mangaResultList = mangaClient.getMangaListByYear(year);
+        var mangaEntities = mangaResultList.getData().stream().map(dto->mapper.getMangaMapper().map(dto)).toList();
 
         var authors = data.getAuthors().findAll();
-
         var mangaSourceIds = data.getMangas().findAll().stream().map(Manga::getSourceId).toList();
         var entitiesToSave = mangaEntities.stream().filter(Predicate.not(entity-> mangaSourceIds.contains(entity.getSourceId())))
                 .toList();
         entitiesToSave.forEach(entity->{
-            data.getMangas().save(entity);
-            var author = mangas.stream()
+            var matchingMangaDto = mangaResultList.getData().stream()
                     .filter(mangaDto->mangaDto.getId().equals(entity.getSourceId()))
-                    .findFirst().get()
-                    .getRelationships()
-                    .stream().filter(relationshipDto->relationshipDto.getType().equals("author"))
-                    .map(relationshipDto->mangaClient.getAuthorById(relationshipDto.getId())).map(dto->mapper.getAuthorMapper().map(dto)).findFirst().get();
-            if(!authors.contains(author)) data.getAuthors().save(author);
-            entity.setAuthor(author);
+                    .findFirst().get();
+            var mangaRelationships = matchingMangaDto.getRelationships();
+            if(!mangaRelationships.isEmpty()){
+                var authorRelationship = mangaRelationships.stream()
+                        .filter(relationshipDto->relationshipDto.getType().equals("author"))
+                        .findFirst().get();
+                var authorDto = mangaClient.getAuthorById(authorRelationship.getId()).getData();
+                var authorEntity = mapper.getAuthorMapper().map(authorDto);
+                if(!authors.contains(authorEntity)) data.getAuthors().save(authorEntity);
+                entity.setAuthor(authorEntity);
+            }
+            data.getMangas().save(entity);
         });
 
     }
