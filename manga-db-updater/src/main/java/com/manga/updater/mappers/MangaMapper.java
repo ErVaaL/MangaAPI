@@ -1,6 +1,6 @@
 package com.manga.updater.mappers;
 
-import com.manga.client.contract.MangaDto;
+import com.manga.client.contract.mangaDtos.MangaDto;
 import com.manga.model.Manga;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.manga.updater.mappers;
 
-import com.manga.client.contract.AuthorDto;
+import com.manga.client.contract.authorDtos.AuthorDto;
 import com.manga.model.Author;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +14,10 @@ public class AuthorMapper implements IMapEntities<AuthorDto, Author>{
     @Override
     public Author map(AuthorDto authorDto, Author author) {
         author.setSourceId(authorDto.getId());
-        author.setBiography(authorDto.getBiography());
-        author.setTwitter(authorDto.getTwitter());
-        author.setWebsite(authorDto.getWebsite());
-        author.setName(authorDto.getName());
+        author.setBiography(authorDto.getAttributes().getBiography().getEn());
+        author.setTwitter(authorDto.getAttributes().getTwitter());
+        author.setWebsite(authorDto.getAttributes().getWebsite());
+        author.setName(authorDto.getAttributes().getName());
         return author;
     }
 }
