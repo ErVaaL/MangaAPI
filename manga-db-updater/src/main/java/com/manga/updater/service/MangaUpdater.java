@@ -25,6 +25,7 @@ public class MangaUpdater implements IUpdateManga{
         var mangaEntities = mangaResultList.getData().stream().map(dto->mapper.getMangaMapper().map(dto)).toList();
 
         var authors = data.getAuthors().findAll();
+        var authorsSourceIds = authors.stream().map(author->author.getSourceId()).toList();
         var mangaSourceIds = data.getMangas().findAll().stream().map(Manga::getSourceId).toList();
         var entitiesToSave = mangaEntities.stream().filter(Predicate.not(entity-> mangaSourceIds.contains(entity.getSourceId())))
                 .toList();
@@ -33,17 +34,27 @@ public class MangaUpdater implements IUpdateManga{
                     .filter(mangaDto->mangaDto.getId().equals(entity.getSourceId()))
                     .findFirst().get();
             var mangaRelationships = matchingMangaDto.getRelationships();
+            var mangaGenresDtos = matchingMangaDto.getAttributes().getTags().stream().filter(tagDto->tagDto.getAttributes().getGroup().equals("genre")).toList();
+            var mangaGenres = mangaGenresDtos.stream().map(tagDto->mapper.getGenreMapper().map(tagDto)).toList();
+            var genres = data.getGenres().findAll();
             if(!mangaRelationships.isEmpty()){
                 var authorRelationship = mangaRelationships.stream()
                         .filter(relationshipDto->relationshipDto.getType().equals("author"))
                         .findFirst().get();
                 var authorDto = mangaClient.getAuthorById(authorRelationship.getId()).getData();
                 var authorEntity = mapper.getAuthorMapper().map(authorDto);
-                if(!authors.contains(authorEntity)) data.getAuthors().save(authorEntity);
+                if(!authorsSourceIds.contains(authorEntity.getSourceId())) data.getAuthors().save(authorEntity);
                 entity.setAuthor(authorEntity);
             }
-
             data.getMangas().save(entity);
+            mangaGenresDtos.forEach(tagDto->{
+                var genreEntity = data.getGenres().findBySourceId(tagDto.getId());
+                if(genreEntity == null){
+                    genreEntity = data.getGenres().save(mapper.getGenreMapper().map(tagDto));
+                }
+                entity.getGenres().add(genreEntity);
+            });
+
         });
 
     }

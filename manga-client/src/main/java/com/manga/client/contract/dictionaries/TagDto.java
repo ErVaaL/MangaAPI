@@ -13,6 +13,8 @@ import lombok.Setter;
 public class TagDto {
     @JsonProperty("id")
     private String id;
+    @JsonProperty("type")
+    private String type;
     @JsonProperty("attributes")
     private TagAttributesDto attributes;
 
