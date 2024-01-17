@@ -2,6 +2,7 @@ package com.manga.updater.service;
 
 import com.manga.client.IMangaClient;
 import com.manga.client.IMangaDictionariesClient;
+import com.manga.model.Genre;
 import com.manga.model.Manga;
 import com.manga.repositories.ICatalogData;
 import com.manga.updater.mappers.ICatalogMappers;
@@ -10,6 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 @Service
@@ -60,7 +65,8 @@ public class MangaUpdater implements IUpdateManga{
                 if(genreEntity == null){
                     data.getGenres().save(mapper.getGenreMapper().map(tagDto));
                     entity.getGenres().add(data.getGenres().findBySourceId(tagDto.getId()));
-                }else{
+                }
+                if(!entity.getGenres().contains(genreEntity)){
                     entity.getGenres().add(genreEntity);
                 }
             });
@@ -69,13 +75,12 @@ public class MangaUpdater implements IUpdateManga{
     }
     private void updateDictionaries() {
         var tags = dictionariesClient.getTagsDtos();
-        var genres = data.getGenres().findAll();
-        var genresFromTags = dictionariesClient.getTagsDtos().stream()
+        Set<Genre> existingGenres = new HashSet<>(data.getGenres().findAll());
+        List<Genre> genresFromTags = dictionariesClient.getTagsDtos().stream()
                 .filter(tagDto -> tagDto.getAttributes().getGroup().equals("genre"))
                 .map(dto->mapper.getGenreMapper().map(dto))
+                .filter(Predicate.not(existingGenres::contains))
                 .toList();
-        genresFromTags.stream()
-                .filter(Predicate.not(genres::contains))
-                .forEach(genre->data.getGenres().save(genre));
+       data.getGenres().saveAll(genresFromTags);
     }
 }
