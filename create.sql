@@ -16,7 +16,7 @@ CREATE TABLE Manga(
     is_locked BOOLEAN NOT NULL,
     year INTEGER,
     description TEXT,
-    author_id BIGINT NOT NULL,
+    author_id BIGINT,
     PRIMARY KEY (id),
     FOREIGN KEY (author_id) REFERENCES Author(id)
 );
