@@ -28,7 +28,7 @@ public class MangaController {
         var manga = mangaService.getManga(id);
         return ResponseEntity.ok(manga);
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteMangaById(@PathVariable("id") long id){
         mangaService.deleteMangaById(id);
         return ResponseEntity.ok(id);
