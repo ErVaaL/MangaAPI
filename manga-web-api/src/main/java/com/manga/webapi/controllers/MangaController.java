@@ -3,6 +3,7 @@ package com.manga.webapi.controllers;
 import com.manga.webapi.contract.MangaDTO;
 import com.manga.webapi.services.IMangaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class MangaController {
     private final IMangaService mangaService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity saveManga(@RequestBody MangaDTO manga){
         var id = mangaService.saveManga(manga);
         return ResponseEntity.ok(id);
