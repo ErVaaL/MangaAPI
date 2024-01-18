@@ -5,7 +5,7 @@ import com.manga.model.Manga;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MangaMapper implements IMapEntities<MangaDto, Manga>{
+public class MangaDtoToEntityMapper implements IMapEntities<MangaDto, Manga>{
     @Override
     public Manga map(MangaDto mangaDto) {
         return map(mangaDto, new Manga());

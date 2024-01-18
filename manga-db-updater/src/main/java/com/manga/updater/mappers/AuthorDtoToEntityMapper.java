@@ -5,7 +5,7 @@ import com.manga.model.Author;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthorMapper implements IMapEntities<AuthorDto, Author>{
+public class AuthorDtoToEntityMapper implements IMapEntities<AuthorDto, Author>{
     @Override
     public Author map(AuthorDto authorDto) {
         return map(authorDto, new Author());
