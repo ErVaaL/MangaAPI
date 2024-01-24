@@ -45,37 +45,39 @@ public class MangaUpdater implements IUpdateManga{
 
         saveMangaEntities(mangaEntitiesToSave);
 
+        updateMangaDetails(mangaEntitiesToSave, mangaResultList);
+    }
+
+    private void updateMangaDetails(List<Manga> mangaEntitiesToSave, MangaListResultDto mangaResultList) {
         mangaEntitiesToSave.forEach(entity->{
             MangaDto matchingMangaDto = mangaResultList.getData().stream()
                     .filter(mangaDto->mangaDto.getId().equals(entity.getSourceId()))
                     .findFirst().get();
-
             saveAuthorAndRelation(entity, matchingMangaDto);
             saveMangaGenreRelation(entity, matchingMangaDto);
         });
     }
 
     private void saveMangaGenreRelation(Manga entity, MangaDto matchingMangaDto) {
-        List<TagDto> mangaGenresDtos = matchingMangaDto.getAttributes()
-                .getTags()
-                .stream()
-                .filter(tagDto->tagDto.getAttributes()
-                        .getGroup()
-                        .equals("genre"))
-                .toList();
+    List<TagDto> mangaGenresDtos = matchingMangaDto.getAttributes()
+            .getTags()
+            .stream()
+            .filter(tagDto->tagDto.getAttributes()
+                    .getGroup()
+                    .equals("genre"))
+            .toList();
 
-        mangaGenresDtos.forEach(tagDto->{
-            Optional<Genre> genreEntity = data.getGenres().findBySourceId(tagDto.getId());
-            genreEntity.ifPresent(genre -> {
-                if(!entity.getGenres().contains(genre)){
-                    entity.getGenres().add(genre);
-                }
+    mangaGenresDtos.forEach(tagDto->{
+        Genre genre = data.getGenres().findBySourceId(tagDto.getId())
+            .orElseGet(() -> {
+                Genre newGenre = mapper.getGenreMapper().map(tagDto);
+                data.getGenres().save(newGenre);
+                return newGenre;
             });
-            if(genreEntity.isEmpty()){
-                data.getGenres().save(mapper.getGenreMapper().map(tagDto));
-                entity.getGenres().add(mapper.getGenreMapper().map(tagDto));
-            }
-        });
+        if(!entity.getGenres().contains(genre)){
+            entity.getGenres().add(genre);
+        }
+    });
     }
 
     private void saveAuthorAndRelation(Manga entity, MangaDto matchingMangaDto) {
