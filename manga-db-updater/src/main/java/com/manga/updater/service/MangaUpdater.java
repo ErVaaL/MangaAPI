@@ -103,7 +103,6 @@ public class MangaUpdater implements IUpdateManga{
     }
 
     private void updateDictionaries() {
-        List<TagDto> tags = dictionariesClient.getTagsDtos();
         Set<Genre> existingGenres = new HashSet<>(data.getGenres().findAll());
         List<Genre> genresFromTags = dictionariesClient.getTagsDtos().stream()
                 .filter(tagDto -> tagDto.getAttributes().getGroup().equals("genre"))

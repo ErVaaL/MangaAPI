@@ -1,6 +1,8 @@
 package com.manga.webapi.services;
 
+import com.manga.model.Author;
 import com.manga.model.Genre;
+import com.manga.model.Manga;
 import com.manga.repositories.ICatalogData;
 import com.manga.webapi.contract.AuthorDTO;
 import com.manga.webapi.contract.GenreDTO;
@@ -18,7 +20,7 @@ public class MangaService implements IMangaService{
     private final Mappers mappers;
     @Override
     public MangaDTO getManga(long id) {
-        var mangaEntity = db.getMangas().findById(id).orElse(null);
+        Manga mangaEntity = db.getMangas().findById(id).orElse(null);
         if(mangaEntity == null) return null;
         return mappers.getMangaToDtoMapper().map(mangaEntity);
     }
@@ -37,20 +39,20 @@ public class MangaService implements IMangaService{
 
     @Override
     public List<GenreDTO> getGenres() {
-        var genres = db.getGenres().findAll();
+        List<Genre> genres = db.getGenres().findAll();
         return genres.stream().map(this::mapGenreDto).toList();
     }
 
     @Override
     public long saveManga(MangaDTO dto) {
-        var mangaEntity = mappers.getMangaDtoToEntityMapper().map(dto);
+        Manga mangaEntity = mappers.getMangaDtoToEntityMapper().map(dto);
         db.getMangas().save(mangaEntity);
         return mangaEntity.getId();
     }
 
     @Override
     public long saveAuthor(AuthorDTO authorDto, long id) {
-        var AuthorEntity = mappers.getGetAuthorDtoToEntityMapper().map(authorDto);
+        Author AuthorEntity = mappers.getGetAuthorDtoToEntityMapper().map(authorDto);
         db.getAuthors().save(AuthorEntity);
         return AuthorEntity.getId();
     }
@@ -69,7 +71,7 @@ public class MangaService implements IMangaService{
 
     @Override
     public AuthorDTO getAuthor(long id) {
-        var authorEntity = db.getAuthors().findById(id).orElse(null);
+        Author authorEntity = db.getAuthors().findById(id).orElse(null);
         if(authorEntity == null) return null;
         return mappers.getGetAuthorToDtoMapper().map(authorEntity);
     }
@@ -85,7 +87,7 @@ public class MangaService implements IMangaService{
     }
 
     private GenreDTO mapGenreDto(Genre genre){
-        var genreDto = new GenreDTO();
+        GenreDTO genreDto = new GenreDTO();
         genreDto.setId(genre.getId());
         genreDto.setName(genre.getName());
         genreDto.setSourceId(genre.getSourceId());
